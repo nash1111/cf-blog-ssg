@@ -1,0 +1,151 @@
+---
+title: Rustのフレームワーク色々試したい時はShuttleがおすすめです
+description: shuttleの紹介
+pubDate: 2024-06-23
+tags: ["Rust", "Shuttle"]
+heroImage: '../../assets/6.jpg'
+---
+
+## 動機
+自分は2月頃から個人で愛用しているのですが、意外と知られていない気がするので紹介します
+
+## shuttleとは
+Vercel for Backends
+
+
+## 使い方
+cargo-shuttleのインストール
+```
+cargo install cargo-shuttle
+```
+プロジェクトの初期化
+```
+❯ cargo shuttle init
+What do you want to name your project?
+It will be hosted at ${project_name}.shuttleapp.rs, so choose something unique!
+✔ Project name · nash1111-sample
+
+Where should we create this project?
+✔ Directory · /home/nash1111/engagement/nash1111-sample
+```
+選べるプロジェクト
+```
+What type of project template would you like to start from?
+❯ A Hello World app in a supported framework
+  Browse our full library of templates
+
+# A Hello World app in a supported framework
+# を選んだ場合
+
+? Select template ›
+❯ Actix Web - Powerful and fast web framework
+  Axum - Modular web framework from the Tokio ecosystem
+  Bevy - Data driven game engine that compiles to WASM
+  Loco - Batteries included web framework based on Axum
+  Poem - Full-featured and easy-to-use web framework
+  Poise - Discord Bot framework with good slash command support
+  Rocket - Simple and easy-to-use web framework
+  Salvo - Full-featured and easy-to-use web framework
+  Serenity - Discord Bot framework
+  Thruster - Web framework
+  Tide - Web framework
+  Tower - Modular service library
+  Warp - Web framework
+  No framework - An empty implementation of the Shuttle Service trait
+
+# Browse our full library of templates
+# を選んだ場合
+? Select template › [Page 1/2]
+❯ Clerk authentication - Fullstack Rust+React with auth provider logic (clerk)
+  Cookie Authentication - Use JWT to authenticate API endpoints (actix-web)
+  Custom Tracing Subscriber - How to use a custom tracing-subscriber on Shuttle (actix-web)
+  File server - Hello World page that serves static HTML and JS files (actix-web)
+  File server - Hello World static file server with tower-http (axum)
+  File server - Hello World page that serves static HTML files (rocket)
+  Fullstack SaaS - Opinionated fullstack web app with pre-made routes and assets (nextjs)
+  HTMX - Simple CRUD app using HTMX and Askama (htmx)
+  Handlebars dynamic templates - HTML templating with Handlebars (rocket)
+  Image Rescaler - Use the image library to rescale the Shuttle logo (salvo)
+  JWT authentication - Use JWT to authenticate API endpoints (axum)
+  JWT authentication - Use JWT to authenticate API endpoints (rocket)
+  MongoDB - Todo list with a MongoDB database (mongodb)
+  OAuth authentication - Use Google OAuth to authenticate API endpoints (axum)
+? Select template › [Page 2/2]
+❯ OpenDAL in-memory store - A key-value store using OpenDAL (opendal)
+  Postgres - Todo list with a Postgres database (postgres)
+  Postgres - Todo list with a Postgres database (postgres)
+  Postgres - Todo list with a Postgres database (postgres)
+  Postgres - Todo list Discord bot with a Postgres database (serenity)
+  Qdrant - Connecting to Qdrant cloud with shuttle-qdrant (qdrant)
+  Request Scheduler - Schedule requests with a cron schedule (axum)
+  Shuttle custom Cron service - Schedule tasks on a cron schedule with apalis (axum)
+  Turso - Connect to a Turso DB with shuttle-turso (turso)
+  URL shortener - Save long URLs behind a short one, with Postgres storage (rocket)
+  Weather Bot - Weather forecast Discord bot using the Accuweather API (serenity)
+  Websockets - Health monitoring service using websockets (axum)
+  Websockets Actorless - Health monitoring service using websockets (actix-web)
+
+```
+axumを選びました
+```
+❯ A Hello World app in a supported framework
+  Browse our full library of templates
+
+✔ Select template · Axum - Modular web framework from the Tokio ecosystem
+
+Creating project "nash1111-sample" in "/home/nash1111/engagement/nash1111-sample"
+
+✔ Claim the project name "nash1111-sample" by starting a project container on Shuttle? · yes
+
+Project "nash1111-sample" is ready
+Your project will sleep if it is idle for 30 minutes.
+To change the idle time refer to the docs: https://docs.shuttle.rs/getting-started/idle-projects
+
+Run `cargo shuttle deploy --allow-dirty` to deploy your Shuttle service.
+You can `cd` to the directory, then:
+Run `cargo shuttle run` to run the app locally.
+```
+実行(ローカル)
+```
+❯ cargo shuttle run
+❯ curl localhost:8000
+Hello, world!
+```
+デプロイと動作確認
+```
+❯ cargo shuttle deploy --allow-dirty
+...
+2024-06-26T14:15:59.805+09:00 [Deployer]  INFO shuttle_deployer::deployment::run: Runtime started successully
+No resources are linked to this service
+
+Service Name:  nash1111-sample
+Deployment ID: 500aafd6-345f-4981-b08e-08a40cd284e4
+Status:        running
+Last Updated:  2024-06-26T05:15:59Z
+URI:           https://nash1111-sample.shuttleapp.rs
+
+❯ curl https://nash1111-sample.shuttleapp.rs
+Hello, world!
+```
+
+
+
+## 片付け
+```
+❯ cargo shuttle project delete --name nash1111-sample
+WARNING:
+    Are you sure you want to delete "nash1111-sample"?
+    This will...
+    - Delete any databases, secrets, and shuttle-persist data in this project.
+    - Delete any custom domains linked to this project.
+    - Release the project name from your account.
+    This action is permanent.
+```
+
+## 好きなところ
+- init時に豊富なテンプレートから選べて楽しい
+- [shared db](https://docs.shuttle.rs/resources/shuttle-shared-db)の記述だけでDBの設定が可能
+  - ローカル起動の時はlocalhostを見に行く等の設定も可能
+- DBが1GB無料でついてくる
+- [shuttleのブログ](https://www.shuttle.rs/blog/tags/all)で開発に関するポストや、面白い応用方法を確認できる
+- cronがある

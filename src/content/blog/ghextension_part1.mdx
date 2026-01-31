@@ -1,0 +1,43 @@
+---
+title: organizationを指定して、PRを古い順に表示するgh extensionを作成しました
+description: organizationを指定して、archiveされていないレポジトリのPRを古い順に表示するgh extensionを作成しました
+pubDate: 2024-07-06
+tags: ["GitHubCLI", "GoLang"]
+heroImage: '../../assets/14.jpg'
+---
+
+## なぜ作ったか
+- organizationで放置しているPRを洗い出したかったため
+- 最近Rustばかり書いていてGoを忘れそうだったため
+
+## 作ったもの
+[GitHub](https://github.com/nash1111/gh-org-pr-getter)
+
+## 使い方
+```<your-organization-name>```にはorganization名を入れてください
+```
+gh extension install nash1111/gh-org-pr-getter
+gh org-pr-getter <your-organization-name>
+```
+CreatedAtとURLが出力されます
+
+## 作り方
+```
+gh extension create --precompiled=go org-pr-getter
+```
+このコマンドで、gh-org-pr-getterというディレクトリが作成されます(gh-は勝手に先頭にたされます)
+Goのgh extensionテンプレートが作成され、デフォルトだとユーザー名を出力するようになっているので、[go-gh](https://github.com/cli/go-gh)読みつつコードを変更して完成です
+
+## リリース方法
+```
+git tag v0.0.1
+git push origin v0.0.1
+```
+タグをつけてpushすると、テンプレートに元から存在するrelease.ymlが動いてリリースされます
+
+## 今後
+- 一度に全レポジトリの全PRを集めるのをやめたいです(制限に引っかかる可能性があるため)
+- tview等を使ってレポジトリごとにフレームを取ってTUIアプリにしたいです
+
+## 参考
+[Creating GitHub CLI extensions](https://docs.github.com/en/github-cli/github-cli/creating-github-cli-extensions)

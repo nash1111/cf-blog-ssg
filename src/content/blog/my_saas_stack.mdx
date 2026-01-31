@@ -1,0 +1,84 @@
+---
+title: 個人でローンチしたサービスの技術スタック整理 第一部
+description: SaaSスタック紹介
+pubDate: 2025-04-27
+tags: ["Stripe", "Neon", "Prisma", "Hono", "Clerk"]
+heroImage: '../../assets/18.jpg'
+---
+
+## 動機
+個人開発で少し収益が出始めたので備忘録兼ねて状況を大まかに整理します
+3月にリリースしました
+
+## アプリの概要
+- ユーザーに特定のエディタを提供
+  - (詳細希望の場合DMください)
+- 無料会員は一部機能が制限される
+
+## 収益状況
+- 月間アクティブユーザー: 19人
+- 月額3$ユーザー: 11人
+- 無料ユーザー: 8人
+
+## 維持費
+ドメイン代: 年約10$
+
+## 利用しているサービス/技術と各々の責務
+- [Cloudflare Workers](https://www.cloudflare.com/ja-jp/developer-platform/products/workers): Honoでstripeとclerkをラップして、認証、認可、決済を行うAPIを提供する
+- [Cloudflare Pages](https://www.cloudflare.com/ja-jp/developer-platform/products/pages): ユーザーへの直接的な機能提供に利用、
+- [Neon](https://neon.tech): DBに利用
+- [Clerk](https://clerk.com/): ユーザー管理、認証認可に利用
+- [Stripe](https://clerk.com/): 決済に利用
+- [React](https://react.dev/)
+  - フロントで利用
+  - Next,Remixは意図して使っていません
+  - フレームワークのフレームワークに振り回されるのを回避したいため
+- [shadcn/ui](https://ui.shadcn.com/)
+  - フロントの、コンポーネントで利用
+  - 大体ほしいコンポーネントあるので使っています。
+
+バックエンドはこんな形
+NeonのDBブランチを使いつつ
+![バックエンド構成図](../../assets/blog/my_saas_backend.png)
+[markdownファイル](https://nash1111rgba.com//backend.md)
+フロントエンドはCloudflare PagesをGitHubに繋いでブランチプレビュー使っているだけで、特筆することはありません。
+
+## 開発フロー
+フロントエンド
+- developブランチ、その他開発ブランチは開発バックエンドに接続したbranch preview機能を用いている
+- deployブランチにPRマージすることでリリースする
+
+バックエンド
+- wrangler publish --env dev/prodでデプロイ
+- stripeとclerkをラップしてテストを書いている
+- 決済はテスト不能なのでdevでテストカードを使い出来る限りテストする
+- webhookで取れるイベントはすべてSlackに飛ばしている
+
+## いいんじゃないかと思っているところ
+- 課金ユーザーの8割が面識あり、忌憚ない意見が来る
+- 週に一度以上のリリース
+  - [INSPIRED 熱狂させる製品を生み出すプロダクトマネジメント](https://amzn.to/44wfFiH)
+  - リリース頻度は高く、ビッグバンリリースは回避できている
+  - 毎日リリースしたいが、ほぼ土日にしか作業できないため...
+- それなりのクリーンアーキテクチャ
+- プロダクト譲渡も検討している&パフォーマンスは求められないのでRustではなくTypeScriptで妥協
+  - おそらく誰でも読める
+
+## 課題(技術的)
+- 開発ペイン
+  - 自明なtry catchが多すぎる
+  - EffectTSかnever throwの導入検討中
+  - 課金状態等のenum管理周りで冗長なコードが多い
+- stripe cliを使いこなせていない
+- フロントのテスト方針が固まりきっていない&不足している
+  - [［入門］Webフロントエンド E2E テスト――PlaywrightによるWebアプリの自動テストから良いテストの書き方まで](https://amzn.to/42x4YL9)
+  - この本で触れられているテスティングトロフィーに従っていきたい
+  - unitの部分が不足している感がある
+  - とはいえ変わったアプリなので教科書通りとはいかないのかもしれない
+
+## 課題(技術的以外)
+- マーケティング不足
+  - 宣伝が口コミと、自身での押し売りのみ
+- ユーザー数が少ない
+  - 課金ユーザーを200倍にしたい
+- 自分自身が技術的な観点に囚われがち

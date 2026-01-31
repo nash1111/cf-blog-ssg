@@ -1,0 +1,26 @@
+---
+title: このブログにRSSを追加しました
+description: RSS追加
+pubDate: 2024-06-29
+tags: ["Remix"]
+heroImage: '../../assets/8.jpg'
+---
+
+## 手順
+[feed](https://www.npmjs.com/package/feed)を追加します
+```
+bun add feed
+```
+feedにrss2,atom1,json1が生えているため,feedをnewしてから
+```
+feed.rss2()
+feed.atom1()
+feed.json1()
+```
+の結果をそれぞれ```rss.xml,feed.json,atom.xml```に書くようにしました。
+
+## その他
+
+[cloudflare](https://github.com/cloudflare/workers-sdk/issues/3430#issuecomment-1589351536)でnode:fsが一部対応していなそうで、雑にファイル生成することにしました。
+現在PRをトリガーにRSS生成&commitをしています。
+masterに直pushすると反映されないですが、PR作って作業すれば問題ないと考えている&一人での作業なので、RSSをそこまで真剣にケアしなくて良いかなと思い放置しています。

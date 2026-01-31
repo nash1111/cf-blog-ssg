@@ -1,0 +1,29 @@
+---
+title: GitHubCLIでこのブログのタスク管理ページを作りました
+description: gh issueコマンドの結果をshadcn/uiのデータテーブルにした
+pubDate: 2024-06-04
+tags: ["GitHubCLI", "shadcn/ui", "Remix"]
+heroImage: '../../assets/2.jpg'
+---
+
+コード自体はレポジトリにあります
+
+## 構成
+GitHubCLIでissueをJSONで吐き出して、shadcn/uiのData Tableで表示しています
+
+## 作り方(準備)
+- [GitHub CLI](https://docs.github.com/en/github-cli/github-cli/about-github-cli)をインストールして、JSONに吐き出します
+- このコマンドをGitHubActionsで定期実行設定＆コミットするように設定します
+```bash
+gh issue list --state all --json number,title,state,url,body > public/currentIssues.json
+```
+- [Data Table](https://ui.shadcn.com/docs/components/data-table)を導入します
+
+
+## 作り方(実装)
+ほぼサンプルそのままDataTableを使いました、ただデフォルトだとソートした時に列ごとの比が保たれなかったためtable-fixed付与しました
+```typescript
+<div className="rounded-md border">
+    <Table className="table-fixed">
+        <TableHeader>
+```

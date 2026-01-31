@@ -1,0 +1,44 @@
+---
+title: UIライブラリ作り始めました
+description: UIライブラリ作り始めました
+pubDate: 2024-08-29
+tags: ["Design", "Frontend"]
+heroImage: '../../assets/17.jpg'
+---
+
+## 作っているもの
+[deps-less-ui](https://github.com/nash1111/deps-less-ui)
+[storybook](https://nash1111.github.io/deps-less-ui)
+
+## 特徴
+- 依存関係がない
+参照 [package.json](https://github.com/nash1111/deps-less-ui/blob/master/package.json)
+
+
+## 方針
+- 依存関係がない状態を保つ
+  - storybookが壊れた時に対処したくないため
+  - CSSの実装力を高めるため
+- 個人のプロジェクトで必要となったコンポーネントだけを実装する
+
+## 直近のTODO
+- chromatic導入
+- アルファリリースに対応する
+  - 現在はmasterがリリース可能なら常に自動リリースする
+- BlogCardを並べる用のコンポーネント
+- BlogCardとは別に、EnhancedBlogCardコンポーネントを作る
+  - 現在のBlogCardは、全体をLink要素で包んでおり、例えばタグなどだけをクリックしたい場合に対応できていない
+  - これに対応するために、コンポーネントを受け取るコンポーネントとする
+
+## 動機
+- 新規で作るには、どうせなら自分の好みのUIにしたいため
+- Storybookを使ってみたかったため
+- shadcn/uiに頼り切りになってしまい、CSSの実装力が落ちていっているのを体感しているため
+- 一つのプロダクトに一つはUIライブラリはあるべきと思い始めたため
+  - UIライブラリが存在しない場合
+    - フロントの実装にコストが生じてしまい、「せっかく実装したから...」というサンクコストも発生してしまう
+    - サンクコストに囚われて、プロダクトの価値について考える時間が奪われてしまう可能性がある
+    - デザインの統一感がなくなってしまう
+
+## 現状の使いみち
+- とりあえず、BlogCardを生やしてshadcn/uiのカードを置き換えました

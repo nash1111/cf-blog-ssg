@@ -1,0 +1,26 @@
+---
+title: VSCodeで定期git fetchとprune設定する
+description: git prune on VSCode
+pubDate: 2024-06-23
+tags: ["VisualStudioCode", "Git"]
+heroImage: '../../assets/5.jpg'
+---
+
+## 動機
+git fetch忘れるためです
+
+## やり方
+普通の設定と同じく、settings.jsonにかけば問題ありませんでした
+[デフォルト設定](https://code.visualstudio.com/docs/getstarted/settings#_default-settings)通りの3分(180秒)で問題ない場合、最後の項目は不要です
+私は10分に一回程度で良いかなと思いそうしました
+
+```json
+{
+    "git.pruneOnFetch": true,
+    "git.autofetch": true,
+    "git.autofetchPeriod": 600,
+}
+```
+
+## 参考
+[User and Workspace Settings](https://code.visualstudio.com/docs/getstarted/settings)

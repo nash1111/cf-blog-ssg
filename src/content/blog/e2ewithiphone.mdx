@@ -1,0 +1,56 @@
+---
+title: Playwrightでスマホ幅のスクリーンショットを取りました
+description: Playwrightでスマホ幅のスクリーンショットを取りました
+pubDate: 2024-06-23
+tags: ["Playwright"]
+heroImage: '../../assets/7.jpg'
+---
+
+## 動機
+このブログページが、スマホで壊れないかを担保したかったためです
+もともとDesktopサイズ(デフォルトサイズ)で作成していました
+
+## やり方1(setViewportSize使う)
+pageにsetViewportSizeが生えていたので、安直にそれを使ってみました
+```typescript
+test.describe('/blog page', () => {
+    test('take screen shot of blog page', async ({ page }) => {
+        await page.goto('http://localhost:5173/blog');
+        await page.screenshot({ path: `test-results/screenshots/blog-page.png` });
+        });
+});
+```
+
+## やり方2(emulation使う)
+[Emulation](https://playwright.dev/docs/emulation)
+テスト実行時に、同階層の```playwright.config.ts```を見に行くのでdeviceを設定する
+```typescript
+import { defineConfig, devices } from "@playwright/test";
+
+export default defineConfig({
+  projects: [
+    {
+      name: "chromium",
+      use: {
+        ...devices["Desktop Chrome"],
+      },
+    },
+    {
+      name: "Mobile Safari",
+      use: {
+        ...devices["iPhone 13"],
+      },
+    },
+    {
+      name: "Dark Desktop",
+      use: {
+        ...devices["Desktop Chrome"],
+        colorScheme: "dark",
+      },
+    },
+  ],
+});
+```
+
+## おわりに
+emulationの方がplaywrightが想定していそう＆画面幅決め打ちする必要がないので、emulation使うといいかもしれません

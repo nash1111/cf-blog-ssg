@@ -1,0 +1,53 @@
+---
+title: このブログのレポジトリにpr-agent入れてみました
+description: 自動レビュワーであるpr-agentの導入記録
+pubDate: 2024-06-23
+tags: ["AI", "GitHubActions"]
+heroImage: '../../assets/4.jpg'
+---
+
+## 動機
+- このブログのレポジトリのレビュワーがおらず(私が趣味でやってるので当然ですが)、コードベース治安の悪化が懸念されるため
+- 仕事ではないためPRの説明を書くのをサボりがちなので、自動で生成させたい
+
+### 導入方法
+
+[OpenAI](https://platform.openai.com/settings/profile?tab=api-keys)にログインしてAPIキーを作成します。
+追加したキーをOPENAI_KEYとして、レポジトリーのシークレットに追加します。
+```
+.github/workflows/pr_agent.yaml
+```
+を追加して、[公式](https://pr-agent-docs.codium.ai/installation/github/)のyamlを貼り付けます
+```
+on:
+    pull_request:
+      types: [opened, reopened, ready_for_review]
+    issue_comment:
+jobs:
+  pr_agent_job:
+    if: ${{ github.event.sender.type != 'Bot' }}
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+      contents: write
+    name: Run pr agent on every pull request, respond to user comments
+    steps:
+      - name: PR Agent action step
+        id: pragent
+        uses: Codium-ai/pr-agent@main
+        env:
+          OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+以上の設定をした段階で、デフォルトブランチにマージされてからPRがopen, reopen, ready_for_reviewのどれかになると、PR Agentが自動でレビューを行います。
+### デフォルト設定で何をやってくれるか
+[PR#77](https://github.com/nash1111/nash1111-tech-blog/pull/77)にて、デフォルト設定で何が起きたかを確認しました。
+- PRの説明の自動生成
+![auto-description](../../assets/blog/auto-description.png)
+- レビューの負荷見込み(1-5), 関連テスト, セキュリティ上の懸念, 注視すべき箇所
+![whattosee](../../assets/blog/whattosee.png)
+の２つをやってくれるようでした
+
+### その他
+[設定](https://github.com/Codium-ai/pr-agent/blob/main/pr_agent/settings/configuration.toml)を与えることも可能で、言語やモデルを変えたり、ファインチューニングも出来るようです。

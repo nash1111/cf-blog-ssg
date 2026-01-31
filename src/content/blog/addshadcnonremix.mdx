@@ -1,0 +1,39 @@
+---
+title: Remixにshadcn/ui導入した際のメモ
+description: remixにshadcn/ui導入した際のメモ
+pubDate: 2024-06-29
+tags: ["Remix", "shadcn/ui", "Frontend"]
+heroImage: '../../assets/11.jpg'
+---
+
+## 手順
+tailwindとshadcn/uiを順に入れれば大丈夫でした
+### tailwindの導入
+tailwindがないとshadcn initの時エラーになるので、先にtailwindを入れます
+[Install Tailwind CSS with Remix](https://tailwindcss.com/docs/guides/remix)に従えば問題ありませんでした
+```
+bun add tailwindcss postcss autoprefixer
+npx tailwindcss init --ts -p
+// tailwind.config.tsをドキュメント通り編集
+// tailwind.cssをドキュメント通り編集
+// root.tsxをドキュメント通り編集
+```
+
+### shadcn/uiの導入
+こちらも[公式](https://ui.shadcn.com/docs/installation/remix)に従えば問題ありませんでした
+tailwindを入れた後であれば、手順2,3だけを実行すれば問題ありませんでした
+```
+❯ npx shadcn-ui@latest init
+? Would you like to use TypeScript (recommended)? › no / ye
+✔ Would you like to use TypeScript (recommended)? … no / yes
+✔ Which style would you like to use? › Default
+✔ Which color would you like to use as base color? › Slate
+✔ Where is your global CSS file? … app/tailwind.css
+✔ Would you like to use CSS variables for colors? … no / yes
+✔ Are you using a custom tailwind prefix eg. tw-? (Leave blank if not) …
+✔ Where is your tailwind.config.js located? … tailwind.config.js
+✔ Configure the import alias for components: … ~/components
+✔ Configure the import alias for utils: … ~/lib/utils
+✔ Are you using React Server Components? … no / yes
+✔ Write configuration to components.json. Proceed? … yes
+```

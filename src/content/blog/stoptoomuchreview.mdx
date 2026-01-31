@@ -1,0 +1,19 @@
+---
+title: pr-agentのレビューを抑制しました
+description: pr-agentのレビューを抑制しました
+pubDate: 2024-07-06
+tags: ["AI", "GitHubActions"]
+heroImage: '../../assets/13.jpg'
+---
+
+## なぜ
+[以前の投稿](https://nash1111rgba.com/blog/pragent)の通り、このブログのレポジトリにpr-agentを入れてすべてのPRをレビューしてもらうようにしました
+一方で、このブログの投稿はmdxファイル一つと対応しているため、ブログ記事投稿のためだけのPRはレビュー不要と判断しました
+
+## 方法
+ブランチがblog-postで始まる場合はレビュー不要としてアクションを行わないようにしました
+```
+jobs:
+  pr_agent_job:
+    if: ${{ github.event.sender.type != 'Bot' && !startsWith(github.head_ref, 'blog-post') }}
+```
