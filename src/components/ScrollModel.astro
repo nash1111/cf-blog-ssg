@@ -13,6 +13,12 @@
     height: 150px;
     z-index: 1000;
     pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+  }
+
+  #model-container.loaded {
+    opacity: 1;
   }
 
   @media (max-width: 768px) {
@@ -84,6 +90,9 @@
         model.rotation.y = Math.PI;
 
         scene.add(model);
+
+        // Fade in the container after model is loaded
+        container.classList.add('loaded');
       },
       undefined,
       (error) => {
