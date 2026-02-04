@@ -53,6 +53,28 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 			.last-updated-on {
 				font-style: italic;
 			}
+			.back-link {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.5em;
+				color: rgb(var(--gray));
+				text-decoration: none;
+				font-size: 0.9em;
+				transition: color 0.2s ease;
+			}
+			.back-link:hover {
+				color: var(--accent);
+			}
+			.back-link-top {
+				margin-bottom: 1em;
+			}
+			.back-link-bottom {
+				display: block;
+				text-align: center;
+				margin-top: 3em;
+				padding-top: 2em;
+				border-top: 1px solid rgb(var(--gray-light));
+			}
 		</style>
 	</head>
 
@@ -65,6 +87,9 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 					{heroImage && <Image width={1020} height={510} src={heroImage} alt="" transition:name={`hero-${title}`} />}
 				</div>
 				<div class="prose">
+					<a href="/blog" class="back-link back-link-top">
+						<span aria-hidden="true">&larr;</span> Back to Blog
+					</a>
 					<div class="title">
 						<div class="date">
 							<FormattedDate date={pubDate} />
@@ -80,6 +105,9 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 						<hr />
 					</div>
 					<slot />
+					<a href="/blog" class="back-link back-link-bottom">
+						<span aria-hidden="true">&larr;</span> Back to Blog
+					</a>
 				</div>
 			</article>
 		</main>
