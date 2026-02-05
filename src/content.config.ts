@@ -15,6 +15,8 @@ const blog = defineCollection({
 			heroImage: image().optional(),
 			// Flag for migrated/legacy posts
 			old: z.boolean().optional().default(false),
+			// Tags for categorization
+			tags: z.array(z.string()).optional().default([]),
 		}),
 });
 

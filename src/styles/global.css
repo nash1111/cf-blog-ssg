@@ -6,6 +6,7 @@
 
 :root {
 	--accent: #2337ff;
+	--accent-rgb: 35, 55, 255;
 	--accent-dark: #000d8a;
 	--black: 15, 18, 25;
 	--gray: 96, 115, 159;
@@ -157,7 +158,7 @@ hr {
 /* View Transitions - slower, smoother animations */
 ::view-transition-old(root),
 ::view-transition-new(root) {
-	animation-duration: 0.5s;
+	animation-duration: 0.8s;
 	animation-timing-function: ease-in-out;
 }
 
