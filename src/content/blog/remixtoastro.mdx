@@ -1,0 +1,23 @@
+---
+title: 個人ブログをRemix v2からAstroに移行しました
+description: RemixからAstroに移行した理由
+pubDate: 2026-02-03
+heroImage: '../../assets/remix-to-astro.png'
+old: false
+---
+
+## 動機
+- Remix v3への移行が面倒そうだったため
+- ブログで頑張りたくない(MDX書くだけにしたい)ため
+- AstroのView Transitionsが楽そうだったため
+
+## やったこと
+- [公式の](https://developers.cloudflare.com/workers/get-started/quickstarts/)でプロジェクトを作成
+- 既存のMDXファイルを`src/content/blog/`に移動して、frontmatterを調整
+- MeshyIOで(別記事で紹介)
+
+## その他
+Remixは好きですが、mdx配りたいだけなのでAstroでも良いかと思いAstroにしてみました。  
+Next.jsはVercelの持ち物感があってあまり好きになれず、Remixも今回のRemixのバージョン上げはpreactになることでパフォーマンスは良くなるだろうと思いつつもブログなのでパフォーマンス求めておらず...  
+メタフレームワーク無しのReactは本業でやってるので対して自分にとっては面白みもなさそうで...  
+という色々妥協してAstroに落ち着きました  
