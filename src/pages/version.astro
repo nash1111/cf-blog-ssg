@@ -1,0 +1,27 @@
+---
+const commitHash = import.meta.env.COMMIT_HASH || 'dev';
+const buildTime = import.meta.env.BUILD_TIME || new Date().toISOString();
+---
+
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Version</title>
+		<style>
+			body {
+				font-family: monospace;
+				padding: 2rem;
+				background: #1a1a1a;
+				color: #fff;
+			}
+			pre {
+				background: #2d2d2d;
+				padding: 1rem;
+				border-radius: 4px;
+			}
+		</style>
+	</head>
+	<body>
+		<pre>{JSON.stringify({ commit: commitHash, build: buildTime }, null, 2)}</pre>
+	</body>
+</html>
