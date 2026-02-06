@@ -34,3 +34,4 @@ jobs:
           apiToken: ${{ secrets.BLOG_TOKEN }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
           command: pages deploy ./dist --project-name=cf-blog-ssg
+          packageManager: bun
