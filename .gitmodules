@@ -1,3 +1,4 @@
 [submodule "tiny-games"]
 	path = tiny-games
 	url = git@github.com:nash1111/tiny-games.git
+	branch = main
