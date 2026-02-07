@@ -144,7 +144,15 @@ const posts = (await getCollection('blog')).sort(
 							<li class={post.data.old ? 'old-post' : ''}>
 								<a href={`/blog/${post.id}/`}>
 									{post.data.heroImage && (
-										<Image width={720} height={360} src={post.data.heroImage} alt="" transition:name={`hero-${post.data.title}`} />
+										<Image
+											width={480}
+											height={240}
+											src={post.data.heroImage}
+											alt=""
+											loading="lazy"
+											decoding="async"
+											transition:name={`hero-${post.data.title}`}
+										/>
 									)}
 									<h4 class="title" transition:name={`title-${post.data.title}`}>
 										{post.data.title}
