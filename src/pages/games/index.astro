@@ -1,0 +1,86 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import Header from '../../components/Header.astro';
+import { SITE_TITLE } from '../../consts';
+
+const games = [
+	{
+		title: 'Snake',
+		description: 'Classic snake game built with Rust and WebAssembly',
+		href: '/snake/',
+		emoji: '🐍',
+	},
+];
+---
+
+<!doctype html>
+<html lang="ja">
+	<head>
+		<BaseHead title={`Games | ${SITE_TITLE}`} description="Tiny games collection" />
+		<style>
+			main {
+				width: 960px;
+				max-width: calc(100% - 2em);
+				margin: auto;
+				padding: 3em 1em;
+			}
+			h1 {
+				margin-bottom: 0.5rem;
+			}
+			.subtitle {
+				color: rgb(var(--gray));
+				margin-bottom: 2rem;
+			}
+			.games-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+				gap: 1.5rem;
+			}
+			.game-card {
+				background: white;
+				border-radius: 12px;
+				box-shadow: var(--box-shadow);
+				padding: 1.5rem;
+				text-decoration: none;
+				color: inherit;
+				transition: transform 0.2s, box-shadow 0.2s;
+				display: block;
+			}
+			.game-card:hover {
+				transform: translateY(-4px);
+				box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+			}
+			.game-emoji {
+				font-size: 3rem;
+				margin-bottom: 1rem;
+			}
+			.game-title {
+				font-size: 1.25rem;
+				font-weight: bold;
+				margin-bottom: 0.5rem;
+			}
+			.game-description {
+				color: rgb(var(--gray));
+				font-size: 0.9rem;
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1>Games</h1>
+			<p class="subtitle">Tiny games built with Rust + WebAssembly</p>
+			<div class="games-grid">
+				{games.map((game) => (
+					<a href={game.href} class="game-card">
+						<div class="game-emoji">{game.emoji}</div>
+						<div class="game-title">{game.title}</div>
+						<div class="game-description">{game.description}</div>
+					</a>
+				))}
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>
