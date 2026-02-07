@@ -15,9 +15,37 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          submodules: true
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+
+      - name: Cache cargo
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: tiny-games
+          cache-targets: "false"
+
+      - name: Install wasm-bindgen-cli
+        run: cargo install wasm-bindgen-cli
+
+      - name: Build Snake Game WASM
+        working-directory: tiny-games
+        run: |
+          cargo build --release --target wasm32-unknown-unknown
+          wasm-bindgen --out-dir pkg --target web target/wasm32-unknown-unknown/release/tiny-games.wasm
+
+      - name: Copy Snake Game to public
+        run: |
+          mkdir -p public/snake/pkg
+          cp tiny-games/index.html public/snake/
+          cp tiny-games/pkg/* public/snake/pkg/
 
       - name: Install dependencies
         run: bun install
